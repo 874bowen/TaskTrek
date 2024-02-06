@@ -69,6 +69,52 @@ To get started with TaskTrek, follow these steps:
 
 2. The server will start running at `http://localhost:5000`.
 
+### API Documentation
+
+Document the TaskTrek APIs by describing the endpoints and providing examples of usage in API.md file in the server folder. Below are sample requests:
+
+
+#### GET Request
+
+- Endpoint: `/api/tasks`
+- Description: Retrieves all tasks.
+- Example:
+
+    ```json
+    GET http://localhost:5000/api/tasks
+    ```
+
+#### POST Request
+
+- Endpoint: `/api/tasks`
+- Description: Creates a new task.
+- Example:
+
+    ```json
+    POST http://localhost:5000/api/tasks
+    Content-Type: application/json
+
+    {
+        "title": "Task Title",
+        "description": "Task Description"
+    }
+    ```
+
+#### PUT Request
+
+- Endpoint: `/api/tasks/<task_id>`
+- Description: Updates an existing task.
+- Example:
+
+    ```json
+    PUT http://localhost:5000/api/tasks/1
+    Content-Type: application/json
+
+    {
+        "title": "Updated Task Title",
+        "description": "Updated Task Description"
+    }
+    ```
 ## Contributing
 
 We welcome contributions to TaskTrek! If you find any bugs or have suggestions for new features, please open an issue on GitHub or submit a pull request.
