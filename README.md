@@ -18,6 +18,22 @@ To get started with TaskTrek, you'll need to set up both the backend and fronten
 - [TaskTrek Backend Repository](https://github.com/874bowen/TaskTrek/tree/main/client): Instructions to set up and run the backend server.
 - [TaskTrek Frontend Repository](https://github.com/874bowen/TaskTrek/tree/main/client): Instructions to set up and run the frontend client.
 
+## Branch Naming Convention
+
+To maintain consistency and organization in our repository, please follow the branch naming convention below:
+
+> Remember to regularly sync your branch to avoid conflicts
+
+- **Bugfix Branches**: For fixing bugs, use the following format:
+Example: `bugfix/ian/fix-login-issue`
+
+- **Feature Branches**: For adding new features, use the following format:
+Example: `feature/lebuluz/add-authentication`
+
+- **Enhancement Branches**: For implementing enhancements or improvements, use the following format:
+Example: `enhancement/vanessa/update-login-api`
+
+
 ## Contributing
 
 We welcome contributions to TaskTrek! If you find any bugs or have suggestions for new features, please open an issue on the respective GitHub repositories or submit a pull request.
