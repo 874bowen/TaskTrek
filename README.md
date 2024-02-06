@@ -22,6 +22,8 @@ To get started with TaskTrek, you'll need to set up both the backend and fronten
 
 To maintain consistency and organization in our repository, please follow the branch naming convention below:
 
+> Remember to regularly sync your branch to avoid conflicts
+
 - **Bugfix Branches**: For fixing bugs, use the following format:
 Example: `bugfix/ian/fix-login-issue`
 
