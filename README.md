@@ -33,6 +33,49 @@ Example: `feature/lebuluz/add-authentication`
 - **Enhancement Branches**: For implementing enhancements or improvements, use the following format:
 Example: `enhancement/vanessa/update-login-api`
 
+## TaskTrek Application Modules
+
+### 1. User Authentication Module
+- Responsible for user registration, login, and account management.
+- Implements secure authentication mechanisms such as password hashing and session management.
+
+### 2. Task Management Module
+- Enables users to create, edit, and delete tasks.
+- Manages attributes of tasks including title, description, due date, priority, and status.
+
+### 3. Task Assignment and Collaboration Module
+- Allows users to assign tasks to specific team members.
+- Implements collaboration features such as comments and attachments for effective communication.
+
+### 4. Task Filtering and Sorting Module
+- Provides options to filter tasks based on attributes like status, priority, and due date.
+- Implements sorting functionality for better organization of tasks.
+
+### 5. User Dashboard Module
+- Creates personalized dashboards for users, displaying their assigned tasks and project overviews.
+
+### 6. Project Management Module
+- Allows users to group tasks into projects.
+- Provides project-level views and progress tracking for better project management.
+
+### 7. Notification System Module
+- Implements a notification system to alert users about task assignments, due dates, and updates.
+
+## User Story: Task Creation and Assignment
+
+**As a** project manager,  
+**I want to** create a new task and assign it to a team member,  
+**So that** the team can collaborate effectively and track progress.
+
+**Acceptance Criteria:**
+1. The user should be able to access the task creation form.
+2. The task creation form should include fields for title, description, due date, priority, and assignee.
+3. After filling out the required fields and submitting the form, the task should be created and displayed in the task list.
+4. The user should be able to assign the task to a specific team member from a dropdown menu.
+5. Once the task is assigned, the assignee should receive a notification about the new task assignment.
+6. The task should be visible in the assignee's dashboard, indicating their assigned tasks and relevant details.
+7. The user should have the option to edit or delete the task if needed.
+
 
 ## Contributing
 
