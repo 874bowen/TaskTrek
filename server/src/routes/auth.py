@@ -1,7 +1,7 @@
 # app/routes/auth.py
 
 from flask import Blueprint, request, jsonify
-from appl.models.user import User
+from src.models.user import User
 from app import db
 
 auth_bp = Blueprint('auth', __name__)
