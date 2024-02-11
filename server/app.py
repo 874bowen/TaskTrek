@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 from flask_cors import CORS
 CORS(app)
 
-from appl.routes.auth import auth_bp
+from src.routes.auth import auth_bp
 app.register_blueprint(auth_bp, url_prefix='/auth')
 
 @app.route("/")
