@@ -60,14 +60,33 @@ To get started with TaskTrek, follow these steps:
     ```
 
 ### Usage
+0. Create a table named `task_trek` using your mysql
 
-1. Start the Flask server:
+1. Create a `.env` file in root directory and paste and update the following
+
+    ```bash
+    DBUSER = your-root
+    DBPASS = your-password
+    DBHOST = localhost
+    DBPORT = 3306
+    DBNAME = task_trek
+    ```
+
+2. Run migrations 
+
+    ```bash
+    flask db init            # Initialize migrations
+    flask db migrate -m "Initial migration"  # Generate initial migration
+    flask db upgrade   # Apply initial migration
+    ```
+
+3. Start the Flask server:
 
     ```bash
     python app.py
     ```
 
-2. The server will start running at `http://localhost:5000`.
+4. The server will start running at `http://localhost:5000`.
 
 ### API Documentation
 
