@@ -1,7 +1,9 @@
 from flask import Flask
+from flask_bcrypt import Bcrypt
 import os
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 if 'WEBSITE_HOSTNAME' not in os.environ:
     # local development, where we'll use environment variables
@@ -18,7 +20,8 @@ app.config.update(
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
 )
 
-app.config['SECRET_KEY'] = "ade24rset6TEFY4434fdy4ss"
+app.config['SECRET_KEY'] = "\x03m\x87\t\x80\x9b\x8f\xfd\x15\xecVV\xa6h\x05g\x1a\xfe\xb2\xc9\x9f\xa9\xd27"
+app.config['BCRYPT_LOG_ROUNDS'] = 13
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
