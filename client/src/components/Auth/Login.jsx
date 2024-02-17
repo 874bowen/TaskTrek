@@ -39,14 +39,14 @@ const Login = () => {
       <form>
         <p>Please login to your account</p>
 
-        <div className="form-outline mb-3">
+        <div className="form-outline mb-3 flex flex-col">
           <input
             type="email"
             id="email"
             name="email"
             onChange={handleChange}
             value={formData.email}
-            className="form-control"
+            className="input input-bordered w-full bg-[whitesmoke]"
             placeholder="email address"
           />
           <label className="form-label" htmlFor="email">
@@ -54,14 +54,14 @@ const Login = () => {
           </label>
         </div>
 
-        <div className="form-outline mb-3">
+        <div className="form-outline mb-3 flex flex-col">
           <input
             type="password"
             id="password"
             name="password"
             onChange={handleChange}
             value={formData.password}
-            className="form-control"
+            className="input input-bordered w-full bg-[whitesmoke]"
           />
           <label className="form-label" htmlFor="password">
             Password

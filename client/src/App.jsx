@@ -1,9 +1,8 @@
-import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Tasks from "./components/Tasks/Tasks";
-import "bootstrap/dist/css/bootstrap.min.css";
+import './App.css'
 import PrivateRoutes from './routes/PrivateRoutes';
 import { createContext, useState } from 'react';
 
