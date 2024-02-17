@@ -1,0 +1,22 @@
+Enhancement,#FFA500
+Good New Issue,#008000
+Bug,#FF0000
+Feature,#00FFFF
+Documentation,#0000FF
+Performance,#FF1493
+User Interface,#FFD700
+Backend,#800080
+Frontend,#008080
+Critical,#FF4500
+High Priority,#FF0000
+Low Priority,#FFFF00
+Duplicate,#808080
+Invalid,#FFC0CB
+Won't Fix,#A9A9A9
+Review Needed,#FF6347
+Testing Needed,#00FF00
+Approved,#32CD32
+Rejected,#DC143C
+Help Wanted,#800000
+Feedback,#87CEEB
+Security,#B22222

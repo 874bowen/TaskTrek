@@ -56,6 +56,7 @@ def login():
         user = User.query.filter_by(
             email=post_data.get('email')
             ).first()
+        
         if user and user.check_password(post_data.get('password')):
             auth_token = user.encode_auth_token(user.id)
             if auth_token:
@@ -75,7 +76,6 @@ def login():
             return jsonify(responseObject), 202
         
     except Exception as e:
-        print(e)
         responseObject = {
             'status': 'fail',
             'message': 'Try again'
