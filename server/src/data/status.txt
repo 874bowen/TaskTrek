@@ -1,0 +1,4 @@
+To-do,#FFA500
+In Progress,#FFFF00
+In Review,#008000
+Done,#00FF00

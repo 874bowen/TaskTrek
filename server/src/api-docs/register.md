@@ -20,6 +20,7 @@ Example Request Body:
 ```json
 {
     "username": "example_user",
-    "password": "example_password"
+    "password": "example_password",
+    "email": "example@email.com"
 }
 ```
