@@ -17,7 +17,7 @@ class User(db.Model):
         self.email = email
         self.username = username
         self.password = bcrypt.generate_password_hash(
-            password, app.config.get('BCRYPT_LOG_ROUNDS')
+            password, int(app.config.get('BCRYPT_LOG_ROUNDS'))
         ).decode()
         self.registered_on = datetime.datetime.now()
 
