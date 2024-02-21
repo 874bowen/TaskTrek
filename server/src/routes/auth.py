@@ -20,8 +20,30 @@ def register():
 def login():
     # Logic to authenticate user and generate JWT token
     pass
+data = request.get_json()
+    username = data['username']
+    password = data['password']
+
+    user = User.query.filter_by(username=username, password=password).first()
+
+    if user:
+        return jsonify({'message': 'Login successful'}), 200
+    else:
+        return jsonify({'message': 'Invalid username or password'}), 401
 
 @auth_bp.route('/logout', methods=['GET'])
 def logout():
     # Logic to logout user
     pass
+ # Assuming you're using sessions for authentication
+    if 'user_id' in session:
+        session.pop('user_id')
+        return jsonify({'message': 'Logout successful'}), 200
+    else:
+        return jsonify({'message': 'Not logged in'}), 401
+
+
+@auth_bp.route('/users', methods=['GET'])
+def users():
+
+
