@@ -1,9 +1,42 @@
 import Sidebar from "./ui/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BellIcon, ChevronDown, OpenMenubar } from "../../ui/svgs/svgs";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Tasks = () => {
   const [open, setOpen] = useState(false);
+  const [seed, setSeed] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setError(false);
+      setLoading(true);
+      loading && toast.loading("Fetching Projects");
+      try {
+        const authToken = JSON.parse(localStorage.getItem("auth")).auth_token;
+        const res = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/projects/`,
+          {
+            headers: {
+              Authorization: `${authToken}`,
+            },
+          }
+        );
+        setProjects(res.data);
+      } catch (error) {
+        setError(true);
+        error && toast.error("Problem getting projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, [seed]);
 
   return (
     <section className="h-100 flex text-[#222]">
@@ -12,11 +45,20 @@ const Tasks = () => {
         style={{ minHeight: "100vh" }}
       >
         {open && (
-          <div className={`${open ? "col-span-2" : ""}`}>
-            <Sidebar open={open} setOpen={setOpen} />
+          <div className={`${open ? "sm:col-span-3 xl:col-span-2" : ""}`}>
+            <Sidebar
+              open={open}
+              setOpen={setOpen}
+              projects={projects}
+              setSeed={setSeed}
+            />
           </div>
         )}
-        <div className={`bg-white w-full px-4 ${open ? "col-span-10" : ""}`}>
+        <div
+          className={`bg-white w-full px-4 ${
+            open ? "sm:col-span-9 xl:col-span-10" : ""
+          }`}
+        >
           <div className="pt-2 pb-2 flex justify-between items-center">
             {open ? (
               <></>
@@ -29,10 +71,10 @@ const Tasks = () => {
                 <OpenMenubar />
               </span>
             )}
-            <div className="">
-              <div className="">
+            <div className="w-full">
+              <div className="w-full">
                 <div className="p-2 rounded">
-                  <label className="input input-bordered flex items-center gap-2 bg-[whitesmoke] w-[1024px]">
+                  <label className="input input-bordered flex items-center gap-2 bg-[whitesmoke]">
                     <input
                       type="text"
                       className="grow input-md"
@@ -62,11 +104,15 @@ const Tasks = () => {
                 </div>
               </div>
               <div className="flex flex-col">
-                <h3 className="font-bold">Ivan Bowen</h3>
-                <h4 className="font-light">You are online</h4>
+                <small className="font-bold text-nowrap">Ivan Bowen</small>
+                <small className="font-light text-nowrap">You are online</small>
               </div>
               <div className="dropdown dropdown-end">
-                <div tabIndex={0} role="button" className="btn m-1 bg-transparent border-none text-black hover:bg-[whitesmoke]">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn m-1 bg-transparent border-none text-black hover:bg-[whitesmoke]"
+                >
                   <ChevronDown />
                 </div>
                 <ul

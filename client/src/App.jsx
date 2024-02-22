@@ -1,10 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Tasks from "./components/Tasks/Tasks";
+import Login from "./components/Auth/Login";
 import './App.css'
 import PrivateRoutes from './routes/PrivateRoutes';
 import { createContext, useState } from 'react';
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +43,10 @@ const App = () => {
     user: "",
     token: "",
   });
+
   return (
     <div className="" style={{ backgroundColor: "whitesmoke" }}>
+      <ToastContainer />
       <StatusModalContext.Provider value={{ statusData, setStatusData }}>
         <AuthContext.Provider value={{ auth, setAuth }}>
           <RouterProvider router={router} />
