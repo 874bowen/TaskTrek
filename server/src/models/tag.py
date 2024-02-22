@@ -22,3 +22,12 @@ class Tag(db.Model, SerializerMixin):
 
     def __repr__(self):
         return '<id: tag: {}'.format(self.tag)
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'tag': self.tag,
+            'hex_color': self.hex_color,
+            'created_on': self.created_on,
+            'modified_on': self.modified_on
+        }

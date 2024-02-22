@@ -136,3 +136,59 @@ def get_all_status():
             'message': 'Provide a valid auth token.'
         }
         return jsonify(responseObject), 401
+    
+@project_bp.route('/<project_id>', methods=['GET'])
+def get_project(project_id):
+    token = request.headers.get('Authorization')
+    if token:
+        user_id = User.decode_auth_token(token)
+        user = User.query.filter_by(id=user_id).first()
+        if not isinstance(user_id, str):
+            project = Project.query.filter_by(id=project_id).first()
+            # update projects status to status name
+            collaboration = ProjectCollaborator.query.filter_by(project_id=project_id, collaborator_email=user.email).first()
+            if project:
+                # get all tags associated with the project
+                project_tags = ProjectTag.query.filter_by(project_id=project.id).all()
+                status = Status.query.filter_by(id=project.status).first()
+                tags = []
+                for project_tag in project_tags:
+                    tag = Tag.query.filter_by(id=project_tag.tag_id).first()
+                    tags.append(tag.serialize())
+
+                if project.created_by != user_id and not collaboration:
+                    if not collaboration:
+                        responseObject = {
+                            'status': 'fail',
+                            'message': 'You are not authorized to view this project.'
+                        }
+                        return jsonify(responseObject), 401
+                else: 
+                    responseObject = {
+                        'status': 'success',
+                        # return project details with tags
+                        'data': {
+                            'project': project.serialize(),
+                            'tags': tags,
+                            'status': status.serialize()
+                        }
+                    }
+                    return jsonify(responseObject), 200
+            else:
+                responseObject = {
+                    'status': 'fail',
+                    'message': 'Project not found.'
+                }
+                return jsonify(responseObject), 404
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': user_id
+            }
+            return jsonify(responseObject), 401
+    else:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Provide a valid auth token.'
+        }
+        return jsonify(responseObject), 401

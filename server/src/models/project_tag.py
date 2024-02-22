@@ -16,3 +16,10 @@ class ProjectTag(db.Model):
     
     def __repr__(self):
         return '<id: Project tag: {}'.format(self.id)
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'project_id': self.project_id,
+            'tag_id': self.tag_id
+        }

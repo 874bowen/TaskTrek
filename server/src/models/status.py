@@ -22,3 +22,12 @@ class Status(db.Model, SerializerMixin):
 
     def __repr__(self):
         return '<id: status: {}'.format(self.status)
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'status': self.status,
+            'hex_color': self.hex_color,
+            'created_on': self.created_on,
+            'modified_on': self.modified_on
+        }
