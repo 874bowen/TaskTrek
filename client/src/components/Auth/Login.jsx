@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Login = () => {
     axios.post(`${import.meta.env.VITE_SERVER_URL}/auth/login`, formData).then((res) => {
       console.log(res.data);
       if (res.data.status === "success") {
-        sessionStorage.setItem("auth", JSON.stringify(res.data));
+        localStorage.setItem("auth", JSON.stringify(res.data));
         toast.success(res.data.message);
         setTimeout(() => {
           navigate("/");
@@ -92,7 +92,6 @@ const Login = () => {
           </button>
         </div>
       </form>
-      <ToastContainer />
     </Layout>
   );
 };
