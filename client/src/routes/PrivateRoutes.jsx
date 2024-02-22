@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoutes = () => {
-  const [auth, setAuth] = useState(JSON.parse(sessionStorage.getItem("auth")));
+  const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("auth")));
 
   useEffect(() => {
-    let sauth = sessionStorage.getItem("auth");
+    let sauth = localStorage.getItem("auth");
     setAuth((prev) => ({
       ...prev,
       ...JSON.parse(sauth),
