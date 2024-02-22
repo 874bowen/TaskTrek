@@ -58,14 +58,14 @@ def create_project():
                 title=title,
                 description=description,
                 due_date=due_date,
-                status=status,
+                status=int(status),
                 created_by=user_id
             )
             db.session.add(project)
             db.session.commit()
 
             for tag in tags:
-                tag = Tag.query.filter_by(id=tag).first()
+                tag = Tag.query.filter_by(id=int(tag)).first()
                 if tag:
                     project_tag = ProjectTag(
                         project_id=project.id,
