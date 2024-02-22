@@ -6,6 +6,8 @@ import './App.css'
 import PrivateRoutes from './routes/PrivateRoutes';
 import { createContext, useState } from 'react';
 import { ToastContainer } from "react-toastify";
+import Projects from "./components/Projects/Projects";
+import Project from "./components/Projects/Project";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,16 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Tasks />,
+        children: [
+          {
+            path: "projects",
+            element: <Projects />,
+          },
+          {
+            path: "project/:id",
+            element: <Project />,
+          }
+        ]
       },
     ],
   },

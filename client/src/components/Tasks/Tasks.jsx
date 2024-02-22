@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BellIcon, ChevronDown, OpenMenubar } from "../../ui/svgs/svgs";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Outlet } from "react-router-dom";
 
 const Tasks = () => {
   const [open, setOpen] = useState(false);
@@ -129,7 +130,9 @@ const Tasks = () => {
               </div>
             </div>
           </div>
-          <div className=""></div>
+          <div className="">
+            <Outlet />
+          </div>
         </div>
       </div>
     </section>

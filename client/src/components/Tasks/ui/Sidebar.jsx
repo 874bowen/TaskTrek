@@ -21,8 +21,6 @@ import { useGetStatus } from "../../../hooks/useGetStatus";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useGetTags } from "../../../hooks/useGetTags";
-// import axios from "axios";
-// import { toast } from "react-toastify";
 
 const customStyles = {
   option: (defaultStyles) => {
