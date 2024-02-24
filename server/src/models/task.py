@@ -1,25 +1,33 @@
 from app import db
-import mailtrap as mt
+import datetime
 import os
+import mailtrap as mt
 
-class ProjectCollaborator(db.Model):
+class Task(db.Model):
     """
-    ProjectCollaborators Model for storing association projects and collaborators
+    Task Model for storing task related details
     """
-    __tablename__ = 'project_collaborators'
-    # use collaborator's email and project id
+    __tablename__ = 'tasks'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(500), unique=True, nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+    due_date = db.Column(db.DateTime, nullable=False)
+    status = db.Column(db.Integer, db.ForeignKey('status.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
-    collaborator_email = db.Column(db.String(50), unique=False, nullable=False)
-    
-    def invite_collaborator_email(self, project_id, collaborator_email, username, title):
+    assignee_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False)
+    modified_on = db.Column(db.DateTime, nullable=False)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def send_notification(self, username, project_title, task_title, collaborator_email):
         """
-        Invite a user via email to collaborate on a project.
+        Send notification to user
         """
         mail = mt.Mail(
             sender=mt.Address(email= os.environ.get('MAILTRAP_MAIL'), name="TaskTrek Project Management"),
             to=[mt.Address(email=collaborator_email)],
-            subject="Invitation to a TaskTrek Project",
+            subject="You have been assigned a task!",
             html=
             f"""
                 <!doctype html>
@@ -331,7 +339,7 @@ class ProjectCollaborator(db.Model):
                         <tr>
                             <td class="wrapper">
                             <p>Hi there,</p>
-                            <p>You've been invited to join TaskTrek, a platform designed to streamline collaboration and task management. Explore the power of efficient teamwork!</p>
+                            <p>You've been assigned a task on TaskTrek, a platform designed to streamline collaboration and task management. Explore the power of efficient teamwork!</p>
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                 <tbody>
                                 <tr>
@@ -339,7 +347,7 @@ class ProjectCollaborator(db.Model):
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                         <tbody>
                                         <tr>
-                                            <td> <a href="#" target="_blank">Accept Invitation</a> </td>
+                                            <td> <a href="#" target="_blank">View Task</a> </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -348,8 +356,9 @@ class ProjectCollaborator(db.Model):
                                 </tbody>
                             </table>
                             <p>Join now and collaborate seamlessly on the following task:</p>
-                            <p><strong>Invited by:</strong> {username}</p>
-                            <p><strong>Task:</strong> {title}</p>
+                            <p><strong>Assigned by:</strong> {username}</p>
+                            <p><strong>Project:</strong> {project_title}</p>
+                            <p><strong>Task:</strong> {task_title}</p>
                             <p>We look forward to your participation!</p>
                             </td>
                         </tr>
@@ -388,21 +397,33 @@ class ProjectCollaborator(db.Model):
         client = mt.MailtrapClient(token=os.environ.get('MAILTRAP_TOKEN'))
         client.send(mail)
         return "Mail Sent"
-                
 
+    def __init__(self, title, description, due_date, assignee_id, status, project_id, created_by):
+        self.title = title
+        self.description = description
+        self.due_date = due_date
+        self.assignee_id = assignee_id
+        self.status = status
+        self.created_by = created_by
+        self.project_id = project_id
+        self.created_on = datetime.datetime.now()
+        self.modified_on = datetime.datetime.now()
+
+    def __repr__(self):
+        return '<id: title: {}'.format(self.title)
+    
     def serialize(self):
         """
-        Serialize the ProjectCollaborator object to a dictionary.
+        Serialize the Task object to a dictionary.
         """
         return {
             'id': self.id,
-            'project_id': self.project_id,
-            'collaborator_email': self.collaborator_email
+            'title': self.title,
+            'description': self.description,
+            'due_date': self.due_date.strftime('%Y-%m-%d'),
+            'status': self.status,
+            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S'),
+            'modified_on': self.modified_on.strftime('%Y-%m-%d %H:%M:%S'),
+            'created_by': self.created_by
         }
 
-    def __init__(self, project_id, collaborator_email):
-        self.project_id = project_id
-        self.collaborator_email = collaborator_email
-
-    def __repr__(self):
-        return '<id: Project collaborator: {}'.format(self.id)

@@ -1,17 +1,17 @@
 from app import db
 
-class ProjectTag(db.Model):
+class TaskTag(db.Model):
     """
-    ProjectTags Model for storing association projects and tags
+    TaskTags Model for storing association task and tags
     """
-    __tablename__ = 'project_tags'
+    __tablename__ = 'task_tags'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
+    task_id = db.Column(db.Integer, db.ForeignKey('tasks.id'), nullable=False)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
 
-    def __init__(self, project_id, tag_id):
-        self.project_id = project_id
+    def __init__(self, task_id, tag_id):
+        self.task_id = task_id
         self.tag_id = tag_id
     
     def __repr__(self):
@@ -20,6 +20,6 @@ class ProjectTag(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'project_id': self.project_id,
+            'task_id': self.task_id,
             'tag_id': self.tag_id
         }

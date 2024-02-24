@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BellIcon, ChevronDown, OpenMenubar } from "../../ui/svgs/svgs";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Outlet } from "react-router-dom";
 
 const Tasks = () => {
   const [open, setOpen] = useState(false);
@@ -39,7 +40,7 @@ const Tasks = () => {
   }, [seed]);
 
   return (
-    <section className="h-100 flex text-[#222]">
+    <section className="h-100 flex text-[#222] w-12/12 max-w-full">
       <div
         className={`w-full grid ${open ? "grid-cols-12" : ""}`}
         style={{ minHeight: "100vh" }}
@@ -59,7 +60,7 @@ const Tasks = () => {
             open ? "sm:col-span-9 xl:col-span-10" : ""
           }`}
         >
-          <div className="pt-2 pb-2 flex justify-between items-center">
+          <div className="pt-2 pb-2 flex justify-between items-center w-12/12 max-w-full">
             {open ? (
               <></>
             ) : (
@@ -72,7 +73,7 @@ const Tasks = () => {
               </span>
             )}
             <div className="w-full">
-              <div className="w-full">
+              <div className="w-ful">
                 <div className="p-2 rounded">
                   <label className="input input-bordered flex items-center gap-2 bg-[whitesmoke]">
                     <input
@@ -129,7 +130,9 @@ const Tasks = () => {
               </div>
             </div>
           </div>
-          <div className=""></div>
+          <div className="">
+            <Outlet />
+          </div>
         </div>
       </div>
     </section>

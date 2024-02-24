@@ -6,6 +6,8 @@ import './App.css'
 import PrivateRoutes from './routes/PrivateRoutes';
 import { createContext, useState } from 'react';
 import { ToastContainer } from "react-toastify";
+import Projects from "./components/Projects/Projects";
+import Project from "./components/Projects/Project";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,16 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Tasks />,
+        children: [
+          {
+            path: "projects",
+            element: <Projects />,
+          },
+          {
+            path: "project/:id",
+            element: <Project />,
+          }
+        ]
       },
     ],
   },
@@ -45,7 +57,7 @@ const App = () => {
   });
 
   return (
-    <div className="" style={{ backgroundColor: "whitesmoke" }}>
+    <div className="w-full max-w-full" style={{ backgroundColor: "whitesmoke" }}>
       <ToastContainer />
       <StatusModalContext.Provider value={{ statusData, setStatusData }}>
         <AuthContext.Provider value={{ auth, setAuth }}>

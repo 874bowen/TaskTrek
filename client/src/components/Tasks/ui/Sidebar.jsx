@@ -14,15 +14,13 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Select from "react-select";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "@uiw/react-markdown-editor/markdown-editor.css";
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import { useGetStatus } from "../../../hooks/useGetStatus";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useGetTags } from "../../../hooks/useGetTags";
-// import axios from "axios";
-// import { toast } from "react-toastify";
 
 const customStyles = {
   option: (defaultStyles) => {
@@ -109,20 +107,24 @@ const Sidebar = ({ open, setOpen, projects, setSeed }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = { ...data, tags: value.map(v=> v.value), description: markdown };
+    const formData = {
+      ...data,
+      tags: value.map((v) => v.value),
+      description: markdown,
+    };
     const authToken = JSON.parse(localStorage.getItem("auth")).auth_token;
     axios
       .post(`${import.meta.env.VITE_SERVER_URL}/projects/`, formData, {
-          headers: {
-              'Authorization': `${authToken}`
-          }
+        headers: {
+          Authorization: `${authToken}`,
+        },
       })
       .then((res) => {
         if (res.data.status === "success") {
           toast.success(res.data.message);
           setTimeout(() => {
             document.getElementById("closeModal").click();
-            setSeed(Math.random())
+            setSeed(Math.random());
           }, 1000);
         } else {
           toast.error(res.data.message);
@@ -180,13 +182,16 @@ const Sidebar = ({ open, setOpen, projects, setSeed }) => {
                       <details open>
                         <summary>My Projects</summary>
                         <ul>
-                          {projects.user_projects && projects.user_projects?.map((p) => {
-                            return (
-                              <li key={p.id}>
-                              <a>{p.title.substring(0, 15)+ "..."}</a>
-                            </li>
-                            )
-                          })}
+                          {projects.user_projects &&
+                            projects.user_projects?.map((p) => {
+                              return (
+                                <li key={p.id}>
+                                  <Link to={`/project/${p.id}`}>
+                                    {p.title.substring(0, 15) + "..."}
+                                  </Link>
+                                </li>
+                              );
+                            })}
                         </ul>
                       </details>
                     </li>
@@ -194,13 +199,16 @@ const Sidebar = ({ open, setOpen, projects, setSeed }) => {
                       <details open>
                         <summary>Project Collabos</summary>
                         <ul>
-                          {projects.collaboration_projects && projects.collaboration_projects?.map((p) => {
-                            return (
-                              <li key={p.id}>
-                              <a>{p.title.substring(0, 15)+ "..."}</a>
-                            </li>
-                            )
-                          })}
+                          {projects.collaboration_projects &&
+                            projects.collaboration_projects?.map((p) => {
+                              return (
+                                <li key={p.id}>
+                                  <Link to={`/project/${p.id}`}>
+                                    {p.title.substring(0, 15) + "..."}
+                                  </Link>
+                                </li>
+                              );
+                            })}
                         </ul>
                       </details>
                     </li>
@@ -367,7 +375,7 @@ Sidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   projects: PropTypes.object,
-  setSeed: PropTypes.func.isRequired
+  setSeed: PropTypes.func.isRequired,
 };
 
 const framerSidebarBackground = {
