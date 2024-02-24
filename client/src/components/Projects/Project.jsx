@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import DraggableTasks from "./DraggableTasks";
 
 const Project = () => {
   const { id } = useParams();
@@ -36,7 +37,7 @@ const Project = () => {
       }
     };
     fetchProjects();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
@@ -50,6 +51,7 @@ const Project = () => {
           <h2>Deadline: {project.project.due_date}</h2>
           <h2>Status: {project.status.status}</h2>
           <MarkdownPreview source={project.project.description} />
+          <DraggableTasks />
         </>
       )}
     </>

@@ -57,7 +57,7 @@ const App = () => {
   });
 
   return (
-    <div className="" style={{ backgroundColor: "whitesmoke" }}>
+    <div className="w-full max-w-full" style={{ backgroundColor: "whitesmoke" }}>
       <ToastContainer />
       <StatusModalContext.Provider value={{ statusData, setStatusData }}>
         <AuthContext.Provider value={{ auth, setAuth }}>
