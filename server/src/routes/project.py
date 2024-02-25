@@ -149,6 +149,17 @@ def get_project(project_id):
             project = Project.query.filter_by(id=project_id).first()
             # update projects status to status name
             collaboration = ProjectCollaborator.query.filter_by(project_id=project_id, collaborator_email=user.email).first()
+            collaborators = ProjectCollaborator.query.filter_by(project_id=project_id).all()
+            collaborators_data = []
+            created_by = User.query.filter_by(id=project.created_by).first()
+            collaborators_data.append({'id': created_by.id, 'username': created_by.username, 'email': created_by.email})
+
+            for c in collaborators:
+                user = User.query.filter_by(email=c.collaborator_email).first()
+
+                if user:
+                    collaborators_data.append({'id': user.id, 'username': user.username, 'email': user.email})
+            
             if project:
                 # get all tags associated with the project
                 project_tags = ProjectTag.query.filter_by(project_id=project.id).all()
@@ -172,7 +183,8 @@ def get_project(project_id):
                         'data': {
                             'project': project.serialize(),
                             'tags': tags,
-                            'status': status.serialize()
+                            'status': status.serialize(),
+                            'collaborators': collaborators_data
                         }
                     }
                     return jsonify(responseObject), 200
@@ -204,8 +216,9 @@ def get_project_tasks(project_id):
         if not isinstance(user_id, str):
             project = Project.query.filter_by(id=project_id).first()
             tasks = Task.query.filter_by(project_id=project_id).all()
+            collaboration = ProjectCollaborator.query.filter_by(project_id=project_id, collaborator_email=user.email).first()
             if project:
-                if project.created_by != user_id and not tasks:
+                if project.created_by != user_id and not collaboration:
                     responseObject = {
                         'status': 'fail',
                         'message': 'You are not authorized to view this project.'
@@ -402,6 +415,43 @@ def get_project_task(project_id, task_id):
                 responseObject = {
                     'status': 'fail',
                     'message': 'Project or Task not found.'
+                }
+                return jsonify(responseObject), 404
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': user_id
+            }
+            return jsonify(responseObject), 401
+    else:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Provide a valid auth token.'
+        }
+        return jsonify(responseObject), 401
+
+@project_bp.route('/<project_id>/tasks/<task_id>/status', methods=['POST'])
+def update_task_status(project_id, task_id):
+    token = request.headers.get('Authorization')
+    if token:
+        user_id = User.decode_auth_token(token)
+        if not isinstance(user_id, str):
+            post_data = request.get_json()
+            status_name = post_data.get('status_name')
+            task = Task.query.filter_by(id=task_id).first()
+            status_by_name = Status.query.filter_by(status=status_name).first()
+            if task:
+                task.status = status_by_name.id
+                db.session.commit()
+                responseObject = {
+                    'status': 'success',
+                    'message': 'Task status updated successfully.'
+                }
+                return jsonify(responseObject), 200
+            else:
+                responseObject = {
+                    'status': 'fail',
+                    'message': 'Task not found.'
                 }
                 return jsonify(responseObject), 404
         else:
