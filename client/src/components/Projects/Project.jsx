@@ -211,9 +211,11 @@ const Project = () => {
       {project.project && (
         <>
           <div className="relative pt-2">
-            <h1>{project.project.title}</h1>
-            <h2>Deadline: {project.project.due_date}</h2>
-            <h2>Status: {project.status.status}</h2>
+            <h1 className="font-bold text-4xl">{project.project.title}</h1>
+            <div className="flex gap-2 items-center">
+            <h2 className="my-1 text-2xl">Due: {project.project.due_date}</h2>
+            <p><span className={`text-md bg-[${project.status.hex_color}] py-1 px-2 rounded-xl`}>{project.status.status}</span> </p>
+            </div>
             <div className="absolute top-2 right-2 flex gap-2">
               <div className="avatar-group -space-x-6 rtl:space-x-reverse">
                 {project.collaborators.map((collaborator) => {
