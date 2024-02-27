@@ -190,8 +190,10 @@ const Project = () => {
           }
         );
         setTasks(res.data.data);
+        console.log(res.data.data)
       } catch (error) {
         setError(true);
+        console.log("try failed");
         error && toast.error("Problem getting project");
       } finally {
         setLoading(false);
