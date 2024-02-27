@@ -8,6 +8,7 @@ import { createContext, useState } from 'react';
 import { ToastContainer } from "react-toastify";
 import Projects from "./components/Projects/Projects";
 import Project from "./components/Projects/Project";
+import ForgetPassword from "./components/Auth/forget";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/forget_password",
+    element: <ForgetPassword />,
   },
   {
     element: <PrivateRoutes />,
