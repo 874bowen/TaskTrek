@@ -83,7 +83,7 @@ To get started with TaskTrek, follow these steps:
 3. Start the Flask server:
 
     ```bash
-    python app.py
+    flask --app app run --debug
     ```
 
 4. The server will start running at `http://localhost:5000`.
